@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高婕恩 Chieh-En Kao | AI 時代品牌行銷與數位策略顧問</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                    },
+                    colors: {
+                        techBlue: '#2563eb',
+                        techPurple: '#7c3aed',
+                        mintGreen: '#10b981',
+                        slateDark: '#0f172a',
+                    },
+                    boxShadow: {
+                        'premium': '0 10px 30px -10px rgba(37, 99, 235, 0.08)',
+                        'glow': '0 0 20px 0 rgba(16, 185, 129, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 科技感的網格背景與漸層 */
+        .tech-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+        }
+        
+        /* 仿毛玻璃效果 */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .glass-panel-dark {
+            background: rgba(15, 23, 42, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* 漸層文字 */
+        .gradient-text {
+            background: linear-gradient(135deg, #1d4ed8 0%, #7c3aed 50%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 漸層邊框亮光效果 */
+        .gradient-border-hover {
+            position: relative;
+            border-radius: 1rem;
+            transition: all 0.4s ease;
+        }
+        .gradient-border-hover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1rem;
+            padding: 1.5px;
+            background: linear-gradient(135deg, transparent, transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+        .gradient-border-hover:hover::before {
+            background: linear-gradient(135deg, #2563eb, #7c3aed, #10b981);
+        }
+
+        /* 打字機閃爍游標 */
+        .cursor-blink::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* 自訂滾動條 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* 緩慢旋轉的光暈背景 */
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(20px) scale(0.95); }
+        }
+        .animate-float-1 {
+            animation: float-slow 15s ease-in-out infinite;
+        }
+        .animate-float-2 {
+            animation: float-reverse 18s ease-in-out infinite;
+        }
+
+        /* 滾動動畫載入 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans overflow-x-hidden antialiased">
+
+    <!-- 動態背景與光暈效果 -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <!-- Canvas 科技粒子層 -->
+        <canvas id="particleCanvas" class="absolute inset-0 w-full h-full opacity-60"></canvas>
+        
+        <!-- AI 網格底層 -->
+        <div class="absolute inset-0 tech-grid opacity-75"></div>
+        
+        <!-- 柔和漂浮光暈 -->
+        <div class="absolute top-[10%] left-[5%] w-[40vw] h-[40vw] max-w-[500px] rounded-full bg-blue-100/30 blur-[100px] animate-float-1"></div>
+        <div class="absolute bottom-[20%] right-[10%] w-[35vw] h-[35vw] max-w-[450px] rounded-full bg-purple-100/30 blur-[90px] animate-float-2"></div>
+        <div class="absolute top-[50%] left-[40%] w-[30vw] h-[30vw] max-w-[350px] rounded-full bg-emerald-50/20 blur-[80px] animate-float-1"></div>
+    </div>
+
+    <!-- 頂部導覽列 Navbar -->
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="navbar">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <!-- 品牌 logo / 名字 -->
+            <a href="#home" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-violet-600 to-emerald-400 p-[2px] shadow-sm flex items-center justify-center transition-transform duration-300 group-hover:rotate-12">
+                    <div class="w-full h-full rounded-[10px] bg-white flex items-center justify-center">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600 font-extrabold text-sm tracking-wider">JK</span>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-slate-800 text-lg tracking-tight leading-none">高婕恩</span>
+                    <span class="text-[10px] text-slate-400 tracking-widest mt-1 uppercase font-semibold">AI Marketing Strategy</span>
+                </div>
+            </a>
+
+            <!-- 桌面版選單 -->
+            <div class="hidden md:flex items-center space-x-1 p-1 bg-white/40 backdrop-blur-md rounded-full border border-white/60 shadow-sm">
+                <a href="#home" class="px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">首頁</a>
+                <a href="#about" class="px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">關於我</a>
+                <a href="#solutions" class="px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">行銷解決方案</a>
+                <a href="#cases" class="px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">實戰案例</a>
+            </div>
+
+            <div class="hidden md:flex items-center">
+                <a href="https://calendar.app.google/vWgJiEwRC6TnDMwf8" target="_blank" class="glass-panel relative px-6 py-2.5 rounded-full text-sm font-semibold text-blue-600 hover:text-white border border-blue-200/60 overflow-hidden group transition-all duration-300 shadow-sm hover:shadow-glow hover:border-emerald-400">
+                    <span class="relative z-10 flex items-center gap-2">
+                        <i class="fa-regular fa-calendar-check text-emerald-500 group-hover:text-white transition-colors"></i>
+                        預約諮詢
+                    </span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-blue-600 to-violet-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                </a>
+            </div>
+
+            <!-- 手機版選單按鈕 -->
+            <button class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg glass-panel hover:bg-slate-100 transition-colors" id="mobileMenuBtn" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars text-slate-600 text-lg"></i>
+            </button>
+        </nav>
+
+        <!-- 手機版選單內容 -->
+        <div class="hidden md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-lg border-b border-slate-200 shadow-lg px-6 py-6" id="mobileMenu">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="mobile-link text-slate-700 font-medium py-2 border-b border-slate-100">首頁</a>
+                <a href="#about" class="mobile-link text-slate-700 font-medium py-2 border-b border-slate-100">關於我</a>
+                <a href="#solutions" class="mobile-link text-slate-700 font-medium py-2 border-b border-slate-100">行銷解決方案</a>
+                <a href="#cases" class="mobile-link text-slate-700 font-medium py-2 border-b border-slate-100">實戰案例</a>
+                <a href="https://calendar.app.google/vWgJiEwRC6TnDMwf8" target="_blank" class="w-full text-center py-3 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold text-sm flex items-center justify-center gap-2">
+                    <i class="fa-regular fa-calendar-check"></i> 預約諮詢
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. 首頁 Hero Section -->
+    <section id="home" class="relative min-h-screen pt-32 pb-20 flex flex-col justify-center items-center px-6 z-10 overflow-hidden">
+        <div class="max-w-5xl w-full text-center flex flex-col items-center">
+            
+            <!-- 高級感的頂部小標籤 -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel-dark text-xs font-semibold text-slate-600 border border-white/80 mb-8 shadow-sm scale-95 md:scale-100">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="tracking-wide">AI Marketing Solutions Consultant</span>
+                <span class="text-slate-300">|</span>
+                <span class="text-blue-600" id="live-status">Status: Ready to Connect</span>
+            </div>
+
+            <!-- 主標題 -->
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-tight md:leading-none mb-6">
+                最適合你的專屬<span class="gradient-text">行銷助理</span>
+            </h1>
+
+            <!-- 策略顧問深度引言 -->
+            <div class="relative max-w-2xl mx-auto my-6 p-4 md:p-6 rounded-2xl bg-white/40 border border-white/50 shadow-premium backdrop-blur-sm">
+                <span class="absolute -top-4 -left-2 text-slate-200 text-6xl font-serif select-none pointer-events-none">“</span>
+                <p class="text-slate-600 text-sm md:text-base italic leading-relaxed font-medium">
+                    「人們需要的不是一台 1/4 英吋的鑽孔機，而是 1/4 英吋的鑽孔。」
+                </p>
+                <div class="h-[1px] w-12 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto my-3"></div>
+                <p class="text-slate-400 text-[11px] md:text-xs uppercase tracking-widest font-semibold">
+                    —— 真正具有價值的，不是複雜的數位工具，而是完美解決痛點的落地成果。
+                </p>
+                <span class="absolute -bottom-10 -right-2 text-slate-200 text-6xl font-serif select-none pointer-events-none">”</span>
+            </div>
+
+            <!-- 動態打字機效果 -->
+            <div class="h-8 mb-6 flex items-center justify-center">
+                <span class="text-xs md:text-sm tracking-[0.25em] font-mono uppercase text-slate-400 font-semibold cursor-blink" id="typewriter"></span>
+            </div>
+
+            <!-- 副標題 -->
+            <p class="max-w-2xl text-base md:text-lg text-slate-500 leading-relaxed mb-10 font-normal">
+                源源不絕的創意、不怕打槍的溝通力、穩定的團隊專案控管，<br class="hidden md:block">
+                協助品牌建立可執行的流程與最終可衡量的實質成果。
+            </p>
+
+            <!-- 按鈕控制與互動 -->
+            <div class="flex flex-col sm:flex-row items-center gap-4 justify-center w-full max-w-md px-6">
+                <!-- 預約諮詢按鈕 -->
+                <a href="https://calendar.app.google/vWgJiEwRC6TnDMwf8" target="_blank" 
+                   id="cta-primary-btn"
+                   class="w-full sm:w-auto px-8 py-4 rounded-full text-base font-semibold text-slate-700 bg-white/60 hover:bg-white border-2 border-blue-500/20 hover:border-emerald-400/50 flex items-center justify-center gap-3 transition-all duration-300 shadow-premium hover:shadow-glow group">
+                    <i class="fa-regular fa-calendar-check text-emerald-500 text-lg group-hover:scale-110 transition-transform"></i>
+                    <span>預約諮詢</span>
+                </a>
+
+                <!-- 查看服務內容按鈕 -->
+                <a href="#solutions" 
+                   class="w-full sm:w-auto px-8 py-4 rounded-full text-base font-semibold text-slate-600 bg-transparent hover:bg-slate-100/40 border-2 border-transparent hover:border-slate-200 flex items-center justify-center gap-2 transition-all duration-300">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-arrow-down text-sm transition-transform duration-300 group-hover:translate-y-1"></i>
+                </a>
+            </div>
+            
+            <!-- 往下滾動指標 -->
+            <div class="mt-20 animate-bounce text-slate-300 hover:text-blue-500 transition-colors">
+                <a href="#about" aria-label="Scroll Down">
+                    <i class="fa-solid fa-chevron-down text-lg"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. 關於我 About Section -->
+    <section id="about" class="relative py-24 px-6 z-10 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <!-- 區塊標題 -->
+            <div class="text-center mb-16 reveal">
+                <span class="text-xs uppercase tracking-[0.3em] font-bold text-blue-600 block mb-3">About Me</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">行銷、數位工具與專案落地的橋樑</h2>
+                <div class="h-[3px] w-12 bg-gradient-to-r from-blue-600 to-violet-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- 主要內容佈局 -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- 左側：數據亮點與核心精神 (12欄中的5欄) -->
+                <div class="lg:col-span-5 space-y-6 reveal">
+                    <div class="glass-panel p-8 rounded-3xl border border-slate-200/50 shadow-premium relative overflow-hidden group">
+                        <!-- 右上角科技微型細節 -->
+                        <div class="absolute top-4 right-4 text-slate-200 font-mono text-xs font-bold uppercase tracking-wider">AI.ENV v1.0</div>
+                        
+                        <div class="mb-6 flex items-center space-x-4">
+                            <!-- 裝飾頭像或符號 -->
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-violet-600 p-[2px] flex items-center justify-center">
+                                <div class="w-full h-full rounded-[14px] bg-white flex items-center justify-center">
+                                    <i class="fa-solid fa-brain-circuit text-2xl text-blue-600"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-slate-800">高婕恩</h3>
+                                <p class="text-slate-400 text-xs tracking-wider mt-1 font-semibold uppercase">Digital Strategy Consultant</p>
+                            </div>
+                        </div>
+
+                        <!-- 簡介段落 -->
+                        <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
+                            擁有 <span class="text-blue-600 font-bold">15 年</span> 行銷、數位服務與平台專案經驗。擅長整合行銷策略、數位工具、服務流程與專案執行。
+                        </p>
+                        <p class="text-slate-600 text-sm md:text-base leading-relaxed">
+                            曾跨足美商全通行銷集團、錫恩資訊、高盛大等多家知名企業，負責大型政府專案及企業核心品牌的數位轉型推進。具備卓越的跨團隊協作與客戶溝通能力，致力於將虛實活動、需求與成效轉化成最可行的「落地方案」。
+                        </p>
+                    </div>
+
+                    <!-- 4大數位指標 highlight -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-200/50 shadow-sm text-center">
+                            <span class="block text-3xl font-extrabold text-blue-600">15+</span>
+                            <span class="block text-xs text-slate-500 font-medium mt-1">累積服務年資</span>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-200/50 shadow-sm text-center">
+                            <span class="block text-3xl font-extrabold text-violet-600">Gov & Brand</span>
+                            <span class="block text-xs text-slate-500 font-medium mt-1">產官合作經驗</span>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-200/50 shadow-sm text-center col-span-2">
+                            <span class="block text-xl font-extrabold text-slate-800">Marketing × Digital × AI</span>
+                            <span class="block text-xs text-slate-500 font-medium mt-1">跨界整合能力指標</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：深度專業履歷細節 (12欄中的7欄) -->
+                <div class="lg:col-span-7 space-y-6 reveal">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-3">
+                        <span class="w-1.5 h-6 bg-gradient-to-b from-blue-600 to-violet-600 rounded-full"></span>
+                        專業經歷與專案推進優勢
+                    </h3>
+
+                    <div class="space-y-4">
+                        <!-- 專業特點 1 -->
+                        <div class="flex items-start gap-4 p-5 rounded-2xl hover:bg-white/50 border border-transparent hover:border-slate-100 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-bullseye text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-1">精準將需求轉化為可落地策略</h4>
+                                <p class="text-slate-500 text-sm leading-relaxed">
+                                    不流於天馬行空。能完美兼容商業目標與實務流程設計，確保專案具有實際產出，並維持最高等級的使用者體驗與顧客轉換。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 專業特點 2 -->
+                        <div class="flex items-start gap-4 p-5 rounded-2xl hover:bg-white/50 border border-transparent hover:border-slate-100 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-diagram-project text-violet-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-1">數位產品與平台全流程導入</h4>
+                                <p class="text-slate-500 text-sm leading-relaxed">
+                                    曾主導及推進高雄市新聞局 APP、交通行動服務 MaaS、台東好玩卡及熱氣球售票系統，具備完整的系統前期規劃與營運優化經驗。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 專業特點 3 -->
+                        <div class="flex items-start gap-4 p-5 rounded-2xl hover:bg-white/50 border border-transparent hover:border-slate-100 transition-all duration-300">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-users-gear text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-1">多元背景下的跨團隊高階溝通</h4>
+                                <p class="text-slate-500 text-sm leading-relaxed">
+                                    在面對大型政府部門經發局、高雄市新聞局與民間品牌（波蜜果菜汁、新東陽、獨身貴族等）時，皆展現高EQ、強專案調度力與極為穩定的信賴感。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 品牌核心價值陳述 -->
+                    <div class="p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-violet-50 border border-blue-100/30">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fa-solid fa-sparkles text-blue-600 text-sm"></i>
+                            <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider">The Brand Promise / 品牌承諾</h4>
+                        </div>
+                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed">
+                            「我不只規劃策略，我更協助你的組織搭建起可持續被團隊延續的策略框架、內容節奏與執行流程，讓行銷與工具真正內化為你的持續成長力。」
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 行銷解決方案 Services Section -->
+    <section id="solutions" class="relative py-24 px-6 z-10 bg-slate-50/50 border-t border-b border-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <!-- 區塊標題 -->
+            <div class="text-center mb-16 reveal">
+                <span class="text-xs uppercase tracking-[0.3em] font-bold text-blue-600 block mb-3">Core Solutions</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">行銷解決方案</h2>
+                <p class="text-slate-500 text-sm max-w-xl mx-auto mt-4 leading-relaxed">
+                    提供以成效為核心的服務，協助品牌將市場需求、媒體策略、數位工具與實際執行整合成可衡量的商務成果。
+                </p>
+                <div class="h-[3px] w-12 bg-gradient-to-r from-blue-600 to-violet-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- 高級 SaaS 風格卡片牆 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- 卡片 1 -->
+                <div class="glass-panel p-8 rounded-3xl gradient-border-hover shadow-premium hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-blue-600 text-white flex items-center justify-center shadow-md mb-6 transition-transform duration-300 group-hover:scale-110">
+                            <i class="fa-solid fa-compass-drafting text-lg"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">行銷策略與提案規劃</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            從精密的需求分析切入，釐清目標客群、核心溝通重點及資源精準配置。規劃網路媒體策略及提案簡報，確保每一項投入對應明確 ROI。
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-mono">
+                        <span>STRATEGY & DEPLOY</span>
+                        <i class="fa-solid fa-arrow-right-long text-blue-500 transform translate-x-0 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- 卡片 2 -->
+                <div class="glass-panel p-8 rounded-3xl gradient-border-hover shadow-premium hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-500 to-violet-600 text-white flex items-center justify-center shadow-md mb-6 transition-transform duration-300 group-hover:scale-110">
+                            <i class="fa-solid fa-cubes text-lg"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-violet-600 transition-colors">數位產品與服務流程設計</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            全方位掌握網站及 APP 服務架構。完美梳理使用者動線、流程設計及體驗優化。降低前後端溝通落差，大幅提升轉換與留存效率。
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-mono">
+                        <span>PRODUCT & FLOW</span>
+                        <i class="fa-solid fa-arrow-right-long text-violet-500 transform translate-x-0 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- 卡片 3 -->
+                <div class="glass-panel p-8 rounded-3xl gradient-border-hover shadow-premium hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-emerald-600 text-white flex items-center justify-center shadow-md mb-6 transition-transform duration-300 group-hover:scale-110">
+                            <i class="fa-solid fa-timeline text-lg"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-emerald-600 transition-colors">活動企劃與專案執行</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            擁有承接大型城市級、政府及民間大型虛實活動整合的卓越實戰。穩定掌握進度、管控預算，以高度執行力推動最具影響力的成果。
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-mono">
+                        <span>PROJECT MANAGEMENT</span>
+                        <i class="fa-solid fa-arrow-right-long text-emerald-500 transform translate-x-0 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- 卡片 4 -->
+                <div class="glass-panel p-8 rounded-3xl gradient-border-hover shadow-premium hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-violet-500 text-white flex items-center justify-center shadow-md mb-6 transition-transform duration-300 group-hover:scale-110">
+                            <i class="fa-solid fa-comments text-lg"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">社群內容與品牌溝通</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            精準掌握社群脈動、文案設計與高美感設計溝通。能客製化打造最具感染力的內容節奏，並透過行銷異業資源整合，拓展品牌深度與知名度。
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-mono">
+                        <span>COMMUNICATION</span>
+                        <i class="fa-solid fa-arrow-right-long text-blue-500 transform translate-x-0 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- 卡片 5 -->
+                <div class="glass-panel p-8 rounded-3xl gradient-border-hover shadow-premium hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-500 to-emerald-500 text-white flex items-center justify-center shadow-md mb-6 transition-transform duration-300 group-hover:scale-110">
+                            <i class="fa-solid fa-chart-line text-lg"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-violet-600 transition-colors">數據檢視與成效優化</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            運用嚴謹的營運數據與使用者行為模型，持續檢視行銷及平台表現。針對流失點優化流程，讓行銷成為組織內部持續成長的引擎。
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-mono">
+                        <span>DATA ANALYTICS</span>
+                        <i class="fa-solid fa-arrow-right-long text-violet-500 transform translate-x-0 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- 卡片 6 -->
+                <div class="glass-panel p-8 rounded-3xl gradient-border-hover shadow-premium hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-blue-500 text-white flex items-center justify-center shadow-md mb-6 transition-transform duration-300 group-hover:scale-110">
+                            <i class="fa-solid fa-bridge-circle-check text-lg"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-emerald-600 transition-colors">跨部門協作與資源整合</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            擁有極高的專案敏感度，扮演「開發/設計技術」與「商務/客戶端」之間的最佳轉譯者。減少開發落差、理順溝通節點。
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-mono">
+                        <span>COLLABORATION</span>
+                        <i class="fa-solid fa-arrow-right-long text-emerald-500 transform translate-x-0 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. 實戰案例 Cases Section -->
+    <section id="cases" class="relative py-24 px-6 z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <!-- 區塊標題 -->
+            <div class="text-center mb-16 reveal">
+                <span class="text-xs uppercase tracking-[0.3em] font-bold text-blue-600 block mb-3">Track Record</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">精選實戰案例</h2>
+                <p class="text-slate-500 text-sm max-w-xl mx-auto mt-4 leading-relaxed">
+                    橫跨大型公部門專案、百萬人級城市購物節，到交通出行、觀光售票系統平台的完整導入歷程。
+                </p>
+                <div class="h-[3px] w-12 bg-gradient-to-r from-blue-600 to-violet-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- 案例大圖與 Bento Grid 排版 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- 案例 1 -->
+                <div class="glass-panel rounded-3xl overflow-hidden shadow-premium group hover:shadow-lg transition-all duration-300 flex flex-col h-full reveal">
+                    <div class="p-8 pb-4 flex-grow">
+                        <!-- 分類與年份 -->
+                        <div class="flex items-center justify-between text-xs font-semibold mb-4 text-slate-400">
+                            <span class="px-3 py-1 rounded-full bg-blue-50 text-blue-600 font-mono border border-blue-100">GOVERNMENT CAMPAIGN</span>
+                            <span class="font-mono">2021</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">
+                            2021 高雄一百時時抽
+                        </h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                            負責超大型公部門促購振興方案的活動執行。整合多元異業通路，透過創新的即時數位平台抽獎流程機制，成功引爆千萬級發票登錄量，創造極高話題聲量。
+                        </p>
+                    </div>
+                    <div class="bg-slate-50/80 p-6 border-t border-slate-100 flex flex-wrap gap-2">
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">活動整合規劃</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">異業資源對接</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">百萬級流量控管</span>
+                    </div>
+                </div>
+
+                <!-- 案例 2 -->
+                <div class="glass-panel rounded-3xl overflow-hidden shadow-premium group hover:shadow-lg transition-all duration-300 flex flex-col h-full reveal">
+                    <div class="p-8 pb-4 flex-grow">
+                        <!-- 分類與年份 -->
+                        <div class="flex items-center justify-between text-xs font-semibold mb-4 text-slate-400">
+                            <span class="px-3 py-1 rounded-full bg-violet-50 text-violet-600 font-mono border border-violet-100">CITY FESTIVAL</span>
+                            <span class="font-mono">2017 - 2018</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-violet-600 transition-colors">
+                            高雄過好年 & 高雄購物節
+                        </h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                            連續參與推動高雄標誌性的城市節慶與購物盛典。協助整合高雄市政府經發局、商圈代表與在地店家，規劃精緻的數位行銷提案與媒體策略，提振觀光零售與實體消費成果。
+                        </p>
+                    </div>
+                    <div class="bg-slate-50/80 p-6 border-t border-slate-100 flex flex-wrap gap-2">
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">整合行銷策略</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">公部門協調溝通</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">O2O 流程設計</span>
+                    </div>
+                </div>
+
+                <!-- 案例 3 -->
+                <div class="glass-panel rounded-3xl overflow-hidden shadow-premium group hover:shadow-lg transition-all duration-300 flex flex-col h-full reveal">
+                    <div class="p-8 pb-4 flex-grow">
+                        <!-- 分類與年份 -->
+                        <div class="flex items-center justify-between text-xs font-semibold mb-4 text-slate-400">
+                            <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 font-mono border border-emerald-100">DIGITAL PLATFORM</span>
+                            <span class="font-mono">2020</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-emerald-600 transition-colors">
+                            台東好玩卡平台 & 熱氣球售票系統
+                        </h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                            深入參與推動台東年度最核心的大型IP售票與旅遊卡流程。理順線上售票、預約、現地取票等複雜邏輯與動線，提供數十萬遊客流暢、不崩潰的購票與入園體驗。
+                        </p>
+                    </div>
+                    <div class="bg-slate-50/80 p-6 border-t border-slate-100 flex flex-wrap gap-2">
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">售票系統優化</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">平台流程導入</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">遊客動線體驗</span>
+                    </div>
+                </div>
+
+                <!-- 案例 4 -->
+                <div class="glass-panel rounded-3xl overflow-hidden shadow-premium group hover:shadow-lg transition-all duration-300 flex flex-col h-full reveal">
+                    <div class="p-8 pb-4 flex-grow">
+                        <!-- 分類與年份 -->
+                        <div class="flex items-center justify-between text-xs font-semibold mb-4 text-slate-400">
+                            <span class="px-3 py-1 rounded-full bg-blue-50 text-blue-600 font-mono border border-blue-100">TRANSPORT MOBILITY</span>
+                            <span class="font-mono">PROJECTS</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">
+                            交通部運研所 MaaS 交通行動服務
+                        </h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                            跨足高度專業的 Mobility 數位科技領域。參與規管與對接跨運輸載具（捷運、公車、共享運具等）的資訊與票證服務，並聚焦於整合使用者真正的需求。
+                        </p>
+                    </div>
+                    <div class="bg-slate-50/80 p-6 border-t border-slate-100 flex flex-wrap gap-2">
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">交通行動服務MaaS</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">使用者服務設計</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">跨域系統整合</span>
+                    </div>
+                </div>
+
+                <!-- 案例 5 -->
+                <div class="glass-panel rounded-3xl overflow-hidden shadow-premium group hover:shadow-lg transition-all duration-300 flex flex-col h-full reveal">
+                    <div class="p-8 pb-4 flex-grow">
+                        <!-- 分類與年份 -->
+                        <div class="flex items-center justify-between text-xs font-semibold mb-4 text-slate-400">
+                            <span class="px-3 py-1 rounded-full bg-violet-50 text-violet-600 font-mono border border-violet-100">GAMING & APP</span>
+                            <span class="font-mono">APP DEV</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-violet-600 transition-colors">
+                            高雄新聞局 電玩遊戲趴 APP
+                        </h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                            協同多方團隊推進電玩展、遊戲趴專用 APP 產品。將實體活動與 APP 的打卡闖關、抽獎機制、場域互動緊密勾連，讓活動趣味性與觸及率雙向飆升。
+                        </p>
+                    </div>
+                    <div class="bg-slate-50/80 p-6 border-t border-slate-100 flex flex-wrap gap-2">
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">行動 APP 企劃</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">Gamification 遊戲化</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">現地趣味互動</span>
+                    </div>
+                </div>
+
+                <!-- 案例 6 -->
+                <div class="glass-panel rounded-3xl overflow-hidden shadow-premium group hover:shadow-lg transition-all duration-300 flex flex-col h-full reveal">
+                    <div class="p-8 pb-4 flex-grow">
+                        <!-- 分類與年份 -->
+                        <div class="flex items-center justify-between text-xs font-semibold mb-4 text-slate-400">
+                            <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 font-mono border border-emerald-100">FMCG BRAND MARKETING</span>
+                            <span class="font-mono">RETAIL</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-emerald-600 transition-colors">
+                            知名大廠 FMCG 與服飾品牌行銷
+                        </h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                            曾服務波蜜果菜汁、新東陽、獨身貴族等知名民間品牌。負責其新品發布策略、數位轉型推進、實體行銷檔期規劃，建立高成效的消費者互動黏著。
+                        </p>
+                    </div>
+                    <div class="bg-slate-50/80 p-6 border-t border-slate-100 flex flex-wrap gap-2">
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">品牌戰略諮詢</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">消費者行銷洞察</span>
+                        <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-3 py-1 rounded-full">虛實零售整合</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5.5 核心產品與技術解決方案 -->
+    <section id="core-products" class="relative py-24 px-6 z-10 bg-slate-50 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14 reveal">
+                <span class="text-xs uppercase tracking-[0.3em] font-bold text-blue-600 block mb-3">核心產品與技術解決方案</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">近期落地專案與合作案例</h2>
+                <p class="text-slate-500 text-sm max-w-xl mx-auto mt-4 leading-relaxed">
+                    展示具體實績與技術導入經驗，從交通卡、團體服網站到美股資訊社群，皆具備完整專案規劃與執行能力。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <a href="https://men-go.tw/#" target="_blank" class="glass-panel p-8 rounded-3xl border border-slate-200/70 hover:shadow-glow transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-3xl bg-gradient-to-tr from-blue-600 to-emerald-500 text-white flex items-center justify-center mb-5 shadow-md">
+                        <i class="fa-solid fa-credit-card text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">高雄 MenGo 卡</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        暢行高雄交通的月票卡，售票營運、記者會舉辦、數位行銷。
+                    </p>
+                </a>
+
+                <a href="http://funshirt.com.tw/" target="_blank" class="glass-panel p-8 rounded-3xl border border-slate-200/70 hover:shadow-glow transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-3xl bg-gradient-to-tr from-violet-600 to-pink-500 text-white flex items-center justify-center mb-5 shadow-md">
+                        <i class="fa-solid fa-shirt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-violet-600 transition-colors">瘋色計團體服</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        網站企劃與建置，採用 Joomla 架站，兼具 SEO 服務。
+                    </p>
+                </a>
+
+                <a href="https://www.facebook.com/FinGuider" target="_blank" class="glass-panel p-8 rounded-3xl border border-slate-200/70 hover:shadow-glow transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-3xl bg-gradient-to-tr from-emerald-500 to-blue-600 text-white flex items-center justify-center mb-5 shadow-md">
+                        <i class="fa-brands fa-facebook text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">FinGuider 美股資訊網</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        美股資訊分享、財報分析、社群經營。
+                    </p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5.8 社群依賴庫 Social Dependencies -->
+    <section class="relative py-24 px-6 z-10 bg-slate-100 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12 reveal">
+                <span class="text-xs uppercase tracking-[0.3em] font-bold text-blue-600 block mb-3">社群依賴庫</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">多元社群圖示配置</h2>
+                <p class="text-slate-500 text-sm max-w-2xl mx-auto mt-4 leading-relaxed">
+                    以外部依賴庫樣式呈現多個社群入口，方便快速連結 LINE、Facebook、LinkedIn、GitHub 與 Threads。
+                </p>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-4 mb-12">
+                <a href="https://line.me/ti/p/DqcF4Xk0Eb" target="_blank" class="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 text-slate-700 shadow-sm hover:border-green-400 hover:text-green-600 transition-colors duration-300">
+                    <i class="fa-brands fa-line text-2xl"></i>
+                    <span class="font-semibold">LINE</span>
+                </a>
+                <a href="https://www.facebook.com/jane0220/" target="_blank" class="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 text-slate-700 shadow-sm hover:border-blue-500 hover:text-blue-600 transition-colors duration-300">
+                    <i class="fa-brands fa-facebook text-2xl"></i>
+                    <span class="font-semibold">Facebook</span>
+                </a>
+                <a href="https://www.linkedin.com/" target="_blank" class="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 text-slate-700 shadow-sm hover:border-sky-500 hover:text-sky-600 transition-colors duration-300">
+                    <i class="fa-brands fa-linkedin text-2xl"></i>
+                    <span class="font-semibold">LinkedIn</span>
+                </a>
+                <a href="https://github.com/" target="_blank" class="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 text-slate-700 shadow-sm hover:border-slate-900 hover:text-slate-900 transition-colors duration-300">
+                    <i class="fa-brands fa-github text-2xl"></i>
+                    <span class="font-semibold">GitHub</span>
+                </a>
+                <a href="https://www.threads.com/@pinkymother?igshid=NTc4MTIwNjQ2YQ==" target="_blank" class="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-3 text-slate-700 shadow-sm hover:border-fuchsia-500 hover:text-fuchsia-600 transition-colors duration-300">
+                    <i class="fa-brands fa-threads text-2xl"></i>
+                    <span class="font-semibold">Threads</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-panel p-8 rounded-3xl border border-slate-200/70 shadow-sm">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-3xl bg-gradient-to-tr from-blue-600 to-violet-600 text-white flex items-center justify-center shadow-md">
+                            <i class="fa-solid fa-pencil-alt text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">填寫需求表單</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed mt-2">
+                                直接透過 Google Form 告訴我你的專案需求、預算與期待成果，讓我能更快提供精準的諮詢建議。
+                            </p>
+                        </div>
+                    </div>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScn6V5c4TyhmVv2Qrjg42BfZn-FNocED9t8nUV5FPoZbljRFw/viewform?usp=publish-editor" target="_blank" class="inline-flex items-center justify-center w-full px-6 py-4 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold shadow-lg hover:shadow-glow transition-all duration-300">
+                        前往填寫需求表單
+                    </a>
+                </div>
+                <div class="glass-panel p-8 rounded-3xl border border-slate-200/70 shadow-sm">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-slate-900">社群快速連結</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mt-2">
+                            透過社群即時連結建立更多接觸觸點，快速與我連絡、查看最新分享與專案成果。
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="https://line.me/ti/p/DqcF4Xk0Eb" target="_blank" class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:bg-slate-50 transition-colors duration-300">
+                            <i class="fa-brands fa-line text-xl text-green-500"></i>
+                            <span class="font-medium">LINE</span>
+                        </a>
+                        <a href="https://www.facebook.com/jane0220/" target="_blank" class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:bg-slate-50 transition-colors duration-300">
+                            <i class="fa-brands fa-facebook text-xl text-blue-600"></i>
+                            <span class="font-medium">Facebook</span>
+                        </a>
+                        <a href="https://www.linkedin.com/" target="_blank" class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:bg-slate-50 transition-colors duration-300">
+                            <i class="fa-brands fa-linkedin text-xl text-sky-600"></i>
+                            <span class="font-medium">LinkedIn</span>
+                        </a>
+                        <a href="https://github.com/" target="_blank" class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:bg-slate-50 transition-colors duration-300">
+                            <i class="fa-brands fa-github text-xl text-slate-900"></i>
+                            <span class="font-medium">GitHub</span>
+                        </a>
+                        <a href="https://www.threads.com/@pinkymother?igshid=NTc4MTIwNjQ2YQ==" target="_blank" class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:bg-slate-50 transition-colors duration-300">
+                            <i class="fa-brands fa-threads text-xl text-fuchsia-600"></i>
+                            <span class="font-medium">Threads</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 預約諮詢 CTA Section -->
+    <section class="relative py-28 px-6 z-10 overflow-hidden bg-slate-900 text-white">
+        <!-- 黑色科技背景元素 -->
+        <div class="absolute inset-0 tech-grid opacity-10"></div>
+        <div class="absolute -top-[50%] -left-[20%] w-[60vw] h-[60vw] rounded-full bg-blue-600/10 blur-[120px]"></div>
+        <div class="absolute -bottom-[50%] -right-[20%] w-[60vw] h-[60vw] rounded-full bg-violet-600/10 blur-[120px]"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10 reveal">
+            <!-- 小符號 -->
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-500 to-violet-500 p-[1.5px] mx-auto mb-8">
+                <div class="w-full h-full rounded-[14px] bg-slate-900 flex items-center justify-center">
+                    <i class="fa-solid fa-headset text-xl text-blue-400"></i>
+                </div>
+            </div>
+
+            <!-- 標題 -->
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6">
+                讓行銷從靈感，走向<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-violet-400 to-emerald-400">可執行的成果</span>
+            </h2>
+
+            <!-- 說明文案 -->
+            <p class="max-w-xl mx-auto text-slate-400 text-sm md:text-base leading-relaxed mb-12">
+                如果你正在規劃品牌推廣、數位服務設計、大型活動專案，或者希望探尋如何利用數位與 AI 工具優化行銷流程，歡迎預約一對一深度諮詢，釐清目標、落地方案與下一步行動。
+            </p>
+
+            <!-- 按鈕 -->
+            <div class="inline-flex flex-col items-center">
+                <a href="https://calendar.app.google/vWgJiEwRC6TnDMwf8" target="_blank" 
+                   class="px-10 py-5 rounded-full text-base font-bold bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 text-white shadow-lg hover:shadow-glow transform hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-3">
+                    <i class="fa-regular fa-calendar-check text-emerald-400"></i>
+                    <span>立即預約 Google Calendar 諮詢</span>
+                </a>
+                <span class="mt-4 text-xs text-slate-500 font-mono tracking-widest uppercase">
+                    Status: Active · Coffee or Online Meet
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Footer -->
+    <footer class="relative py-12 px-6 z-10 bg-slate-950 text-slate-400 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-violet-600 p-[1px] flex items-center justify-center">
+                    <div class="w-full h-full rounded-[7px] bg-slate-950 flex items-center justify-center">
+                        <span class="text-white font-black text-xs">JK</span>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-white text-sm leading-none">高婕恩 Chieh-En Kao</span>
+                    <span class="text-[9px] text-slate-500 mt-1 uppercase tracking-widest">AI Marketing Strategy & Digital Strategy Consultant</span>
+                </div>
+            </div>
+
+            <!-- 自訂資訊、聯絡與小鏈接 -->
+            <div class="flex flex-col items-center md:items-end gap-2 text-center md:text-right">
+                <p class="text-xs text-slate-500 font-medium">
+                    Marketing Strategy · Digital Service Design · Project Execution
+                </p>
+                <p class="text-[10px] text-slate-600 font-mono">
+                    &copy; 2026 Chieh-En Kao. All rights reserved. Built with Elegant SaaS style.
+                </p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Vanilla JavaScript 主邏輯 -->
+    <script>
+        // DOM 載入完畢後執行
+        window.addEventListener('DOMContentLoaded', () => {
+
+            // ==========================================
+            // 1. 動態 Canvas 粒子連接背景
+            // ==========================================
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let animationFrameId;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.3; // 速度慢，保持優雅
+                    this.vy = (Math.random() - 0.5) * 0.3;
+                    this.radius = Math.random() * 2 + 1;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    // 碰撞邊界反彈
+                    if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx;
+                    if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(37, 99, 235, 0.15)'; // 淡淡的藍色
+                    ctx.fill();
+                }
+            }
+
+            // 初始化粒子
+            const particleCount = Math.min(60, Math.floor(window.innerWidth / 20)); // RWD 自適應數量
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // 更新和繪製粒子
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+
+                // 連接鄰近的粒子
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+                        if (dist < 120) {
+                            const alpha = (1 - dist / 120) * 0.08;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(124, 58, 237, ${alpha})`; // 紫藍色細線
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                animationFrameId = requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+            // ==========================================
+            // 2. 導覽列滾動與毛玻璃變幻 + 平滑滾動偵測
+            // ==========================================
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-white/80', 'backdrop-blur-md', 'shadow-premium', 'border-b', 'border-slate-200/40');
+                    navbar.classList.remove('py-4');
+                    navbar.classList.add('py-2.5');
+                } else {
+                    navbar.classList.remove('bg-white/80', 'backdrop-blur-md', 'shadow-premium', 'border-b', 'border-slate-200/40');
+                    navbar.classList.remove('py-2.5');
+                    navbar.classList.add('py-4');
+                }
+            });
+
+            // 手機版菜單控制
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const isOpen = !mobileMenu.classList.contains('hidden');
+                mobileMenuBtn.innerHTML = isOpen ? '<i class="fa-solid fa-xmark text-slate-600 text-lg"></i>' : '<i class="fa-solid fa-bars text-slate-600 text-lg"></i>';
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars text-slate-600 text-lg"></i>';
+                });
+            });
+
+
+            // ==========================================
+            // 3. JS 打字機動態效果
+            // ==========================================
+            const typewriterElement = document.getElementById('typewriter');
+            const phrases = [
+                "Until Marketing Data science is common sense",
+                "Marketing Strategy · Digital Design · Flawless Execution"
+            ];
+            let currentPhraseIndex = 0;
+            let currentText = "";
+            let isDeleting = false;
+            let charIndex = 0;
+            let typingSpeed = 80;
+
+            function typeEffect() {
+                const currentFullText = phrases[currentPhraseIndex];
+                
+                if (isDeleting) {
+                    currentText = currentFullText.substring(0, charIndex - 1);
+                    charIndex--;
+                    typingSpeed = 40; // 刪除時速度加快
+                } else {
+                    currentText = currentFullText.substring(0, charIndex + 1);
+                    charIndex++;
+                    typingSpeed = 90; // 打字時速度穩定自然
+                }
+
+                typewriterElement.textContent = currentText;
+
+                if (!isDeleting && currentText === currentFullText) {
+                    // 打完了，停留一段時間
+                    typingSpeed = 2000;
+                    isDeleting = true;
+                } else if (isDeleting && currentText === "") {
+                    // 刪完了，切換下一句
+                    isDeleting = false;
+                    currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                    typingSpeed = 500;
+                }
+
+                setTimeout(typeEffect, typingSpeed);
+            }
+            // 開始打字機效果
+            setTimeout(typeEffect, 800);
+
+
+            // ==========================================
+            // 4. CTA 主要按鈕 Hover 的薄荷綠柔光與 Status 變更
+            // ==========================================
+            const primaryBtn = document.getElementById('cta-primary-btn');
+            const liveStatus = document.getElementById('live-status');
+
+            primaryBtn.addEventListener('mouseenter', () => {
+                // 滑鼠移入：改變 status
+                liveStatus.textContent = "Status: Booking Appointment";
+                liveStatus.classList.remove('text-blue-600');
+                liveStatus.classList.add('text-emerald-500');
+            });
+
+            primaryBtn.addEventListener('mouseleave', () => {
+                // 滑鼠移開：還原 status
+                liveStatus.textContent = "Status: Ready to Connect";
+                liveStatus.classList.remove('text-emerald-500');
+                liveStatus.classList.add('text-blue-600');
+            });
+
+
+            // ==========================================
+            // 5. RWD 進場動畫：使用 Intersection Observer
+            // ==========================================
+            const reveals = document.querySelectorAll('.reveal');
+            const observerOptions = {
+                root: null,
+                threshold: 0.1, // 元素露出一點點就開始觸行動畫
+                rootMargin: "0px 0px -40px 0px"
+            };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // 僅觸發一次
+                    }
+                });
+            }, observerOptions);
+
+            reveals.forEach(revealElement => {
+                revealObserver.observe(revealElement);
+            });
+        });
+    </script>
+</body>
+</html>
