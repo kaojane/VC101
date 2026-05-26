@@ -929,6 +929,155 @@
         </div>
     </section>
 
+    <!-- 6.5 聯絡我 / 合作洽詢 Contact Section -->
+    <section id="contact" class="relative py-24 px-6 z-10 bg-slate-50 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-xs uppercase tracking-[0.3em] font-bold text-brand-primary block mb-3">Contact & Collaboration</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">聯絡我 / 合作洽詢</h2>
+                <p class="text-slate-500 text-sm max-w-2xl mx-auto mt-4 leading-relaxed">
+                    直接在此提交合作需求，表單會匿名送出至 Google Forms，並維持在本頁面顯示成功提示。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                <div class="lg:col-span-5 space-y-6 reveal">
+                    <div class="rounded-[2rem] bg-gradient-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-accent/10 p-8 shadow-premium border border-slate-200">
+                        <p class="text-sm uppercase tracking-[0.3em] text-brand-primary font-semibold mb-4">快速洽詢</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">給我您的專案概況，我會回覆最適合的合作方式。</h3>
+                        <ul class="space-y-3 text-slate-600 text-sm leading-relaxed">
+                            <li>• 直接送出到 Google 表單，不會跳轉到 Google 白底頁面</li>
+                            <li>• 成功送出後會立即顯示質感提示視窗</li>
+                            <li>• 快速掌握您的預算、時程與主要需求</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 reveal">
+                    <form id="contactForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScn6V5c4TyhmVv2Qrjg42BfZn-FNocED9t8nUV5FPoZbljRFw/formResponse" method="POST" target="googleFormTarget" class="space-y-6 bg-white rounded-[2rem] border border-slate-200 p-8 shadow-premium">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label class="block text-slate-700 text-sm font-medium">
+                                聯絡人姓名
+                                <input name="entry.2093739213" type="text" required placeholder="請輸入您的姓名" class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20" />
+                            </label>
+                            <label class="block text-slate-700 text-sm font-medium">
+                                電子郵件
+                                <input name="entry.238898736" type="email" required placeholder="your@email.com" class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20" />
+                            </label>
+                            <label class="block text-slate-700 text-sm font-medium">
+                                公司 / 組織名稱
+                                <input name="entry.1132503954" type="text" placeholder="例如：XX 企業" class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20" />
+                            </label>
+                            <label class="block text-slate-700 text-sm font-medium">
+                                您的職位
+                                <input name="entry.1894762745" type="text" placeholder="例如：行銷主管 / 專案負責人" class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20" />
+                            </label>
+                            <label class="block text-slate-700 text-sm font-medium md:col-span-2">
+                                主要聯絡電話
+                                <input name="entry.818145499" type="tel" placeholder="例如：0912-345-678" class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20" />
+                            </label>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label class="block text-slate-700 text-sm font-medium">
+                                感興趣的服務類型
+                                <select name="entry.1569666453" required class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20">
+                                    <option value="" disabled selected>請選擇</option>
+                                    <option value="企業內訓與工作坊 (Corporate Training &amp; Workshops)">企業內訓與工作坊 (Corporate Training & Workshops)</option>
+                                    <option value="行銷數據顧問諮詢 (Marketing Data Consulting)">行銷數據顧問諮詢 (Marketing Data Consulting)</option>
+                                    <option value="資料科學技術服務/專案開發 (Data Science Technical Services/Project Development)">資料科學技術服務/專案開發 (Data Science Technical Services/Project Development)</option>
+                                    <option value="商業策略與資料應用規劃 (Business Strategy &amp; Data Application Planning)">商業策略與資料應用規劃 (Business Strategy & Data Application Planning)</option>
+                                    <option value="其他 (Please specify below)">其他 (Please specify below)</option>
+                                </select>
+                            </label>
+                            <label class="block text-slate-700 text-sm font-medium">
+                                預計專案啟動時程
+                                <select name="entry.1989125801" required class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20">
+                                    <option value="" disabled selected>請選擇</option>
+                                    <option value="一個月內">一個月內</option>
+                                    <option value="1-3 個月內">1-3 個月內</option>
+                                    <option value="3-6 個月內">3-6 個月內</option>
+                                    <option value="6 個月以上">6 個月以上</option>
+                                    <option value="僅為初步了解 (Just gathering initial information)">僅為初步了解 (Just gathering initial information)</option>
+                                </select>
+                            </label>
+                            <label class="block text-slate-700 text-sm font-medium">
+                                專案預算區間
+                                <select name="entry.1419345080" required class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20">
+                                    <option value="" disabled selected>請選擇</option>
+                                    <option value="新台幣 5 萬以下">新台幣 5 萬以下</option>
+                                    <option value="新台幣 5 萬 - 15 萬">新台幣 5 萬 - 15 萬</option>
+                                    <option value="新台幣 15 萬 - 50 萬">新台幣 15 萬 - 50 萬</option>
+                                    <option value="新台幣 50 萬以上">新台幣 50 萬以上</option>
+                                    <option value="尚未確定 (Not sure yet)">尚未確定 (Not sure yet)</option>
+                                </select>
+                            </label>
+                            <label class="block text-slate-700 text-sm font-medium">
+                                首次聯繫方式
+                                <select name="entry.1884526719" required class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20">
+                                    <option value="" disabled selected>請選擇</option>
+                                    <option value="電子郵件 (Email)">電子郵件 (Email)</option>
+                                    <option value="電話 (Phone Call)">電話 (Phone Call)</option>
+                                    <option value="視訊會議 (Video Conference)">視訊會議 (Video Conference)</option>
+                                    <option value="Line/通訊軟體">Line/通訊軟體</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label class="block text-slate-700 text-sm font-medium">
+                                需求摘要 / 補充說明
+                                <textarea name="entry.1769490790" rows="4" placeholder="請簡述您的業務需求、目標對象或專案背景" class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"></textarea>
+                            </label>
+                            <label class="block text-slate-700 text-sm font-medium">
+                                方便聯繫的時間
+                                <input name="entry.164475363" type="text" placeholder="例如：6/15 下午 2 點後" class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20" />
+                            </label>
+                            <label class="block text-slate-700 text-sm font-medium">
+                                您對行銷資料科學服務的期待
+                                <select name="entry.1405291499" required class="mt-3 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20">
+                                    <option value="" disabled selected>請選擇</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-center gap-4">
+                            <button type="submit" class="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-primary text-white font-semibold shadow-lg hover:bg-brand-secondary transition-all duration-300">送出需求</button>
+                            <span class="text-xs text-slate-500">送出後將於網站內顯示成功提示，並保留目前頁面。</span>
+                        </div>
+                    </form>
+                    <iframe id="googleFormTarget" name="googleFormTarget" style="position:absolute;left:-9999px;top:-9999px;width:0;height:0;border:0;" aria-hidden="true"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="formSuccessModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 px-4 py-6">
+        <div class="max-w-md w-full rounded-[2rem] bg-white p-8 shadow-2xl">
+            <div class="flex items-center justify-between gap-4 mb-6">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-brand-primary font-semibold">送出成功</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-3">需求已送出，我們將盡快與您聯絡！</h3>
+                </div>
+                <button id="contactSuccessClose" class="text-slate-500 hover:text-slate-900 text-2xl leading-none">×</button>
+            </div>
+            <p class="text-slate-500 leading-relaxed mb-6">感謝您的資訊，我們會在最短時間內檢視需求並與您安排後續聯繫。</p>
+            <div class="text-right">
+                <button id="contactSuccessButton" class="px-6 py-3 rounded-full bg-brand-primary text-white font-semibold hover:bg-brand-secondary transition-all duration-300">我知道了</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 7. Footer -->
     <footer class="relative py-12 px-6 z-10 bg-slate-950 text-slate-400 border-t border-slate-900">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
@@ -1161,6 +1310,72 @@
             reveals.forEach(revealElement => {
                 revealObserver.observe(revealElement);
             });
+
+            const contactForm = document.getElementById('contactForm');
+            const googleFormTarget = document.getElementById('googleFormTarget');
+            const formSuccessModal = document.getElementById('formSuccessModal');
+            const contactSuccessClose = document.getElementById('contactSuccessClose');
+            const contactSuccessButton = document.getElementById('contactSuccessButton');
+            let isGoogleFormSubmitting = false;
+
+            function submitGoogleForm(event) {
+                event.preventDefault();
+                if (!contactForm) {
+                    return false;
+                }
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.classList.add('opacity-70', 'cursor-not-allowed');
+                }
+                isGoogleFormSubmitting = true;
+                contactForm.submit();
+                return false;
+            }
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', submitGoogleForm);
+            }
+
+            if (googleFormTarget) {
+                googleFormTarget.addEventListener('load', () => {
+                    if (!isGoogleFormSubmitting) return;
+                    isGoogleFormSubmitting = false;
+                    if (contactForm) {
+                        contactForm.reset();
+                        const submitButton = contactForm.querySelector('button[type="submit"]');
+                        if (submitButton) {
+                            submitButton.disabled = false;
+                            submitButton.classList.remove('opacity-70', 'cursor-not-allowed');
+                        }
+                    }
+                    if (formSuccessModal) {
+                        formSuccessModal.classList.remove('hidden');
+                        formSuccessModal.classList.add('flex');
+                    }
+                });
+            }
+
+            function closeFormSuccess() {
+                if (formSuccessModal) {
+                    formSuccessModal.classList.add('hidden');
+                    formSuccessModal.classList.remove('flex');
+                }
+            }
+
+            if (contactSuccessClose) {
+                contactSuccessClose.addEventListener('click', closeFormSuccess);
+            }
+            if (contactSuccessButton) {
+                contactSuccessButton.addEventListener('click', closeFormSuccess);
+            }
+            if (formSuccessModal) {
+                formSuccessModal.addEventListener('click', (event) => {
+                    if (event.target === formSuccessModal) {
+                        closeFormSuccess();
+                    }
+                });
+            }
         });
     </script>
 </body>
